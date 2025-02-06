@@ -4,8 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PaymentResource\Pages;
 use App\Filament\Resources\PaymentResource\RelationManagers;
+use App\Models\Party;
 use App\Models\Payment;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -26,16 +28,27 @@ class PaymentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('party_id')
-                    ->required()
-                    ->numeric(),
+                Select::make('party_id')
+                ->label('Select Customer')
+                ->options(Party::all()->pluck('name', 'id')) // Fetch names and IDs of the customers
+                ->searchable()
+                ->required(),
                 Forms\Components\TextInput::make('amount')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('payment_method')
+                    Forms\Components\TextInput::make('Reduction')
                     ->required()
-                    ->maxLength(255)
-                    ->default('cash'),
+                    ->numeric(),
+                Select::make('payment_method')
+                    ->label('Payment Method')
+                    ->options([
+                        'cash' => 'Cash',
+                        'mobicash' => 'Mobicash',
+                        'easypaisa' => 'Easy Paisa',
+                        'bank' => 'Bank',
+                    ])
+                    ->required()
+                    ->placeholder('Select Payment Method'),
                 Forms\Components\Textarea::make('reference')
                     ->columnSpanFull(),
             ]);

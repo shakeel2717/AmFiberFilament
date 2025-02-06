@@ -6,6 +6,7 @@ use App\Filament\Resources\QuotationResource\Pages;
 use App\Filament\Resources\QuotationResource\RelationManagers;
 use App\Models\Quotation;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -25,9 +26,14 @@ class QuotationResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('customer_id')
-                    ->required()
-                    ->numeric(),
+                Select::make('customer_id')
+                ->label('Customer')
+                ->required()
+                ->options(function () {
+                    return \App\Models\Customer::all()->pluck('name', 'id');
+                })
+                ->searchable()
+                ->placeholder('Select a customer'),
                 Forms\Components\TextInput::make('quotation_number')
                     ->required()
                     ->maxLength(255),

@@ -4,6 +4,9 @@ namespace App\Filament\Widgets;
 
 use App\Models\Invoice;
 use App\Models\Customer;
+use App\Models\Party;
+use App\Models\Plai;
+use App\Models\Product;
 use App\Models\Quotation;
 use App\Models\User;
 use App\Models\Transaction;
@@ -34,6 +37,19 @@ class StatsOverview extends BaseWidget
             Stat::make('Total Transactions', Transaction::count())
                 ->icon('heroicon-o-banknotes')
                 ->color('danger'),
+
+                Stat::make('Total Plai', Plai::count())
+                ->icon('heroicon-o-play')
+                ->color('indigo'),
+
+            Stat::make('Total Party', Party::count())
+                ->icon('heroicon-o-cog')
+                ->color('teal'),
+
+            Stat::make('Total Products', Product::count())
+                ->icon('heroicon-o-cube')
+                ->color('amber'),
         ];
+
     }
 }
