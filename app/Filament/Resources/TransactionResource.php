@@ -23,12 +23,26 @@ class TransactionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('invoice_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('quotation_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('type')
+                Forms\Components\Select::make('customer_id')
+                    ->label('Customer')
+                    ->relationship('customer', 'name')
                     ->required(),
+
+                Forms\Components\Select::make('invoice_id')
+                    ->label('Invoice (Optional)')
+                    ->relationship('invoice', 'invoice_number')
+                    ->nullable(),
+
+                Forms\Components\Select::make('type')
+                    ->label('Transaction Type')
+                    ->options([
+                        'payment' => 'Payment',
+                        'refund' => 'Refund',
+                        'adjustment' => 'Adjustment',
+                    ])
+                    ->default('payment')
+                    ->required(),
+
                 Forms\Components\TextInput::make('amount')
                     ->required()
                     ->numeric(),

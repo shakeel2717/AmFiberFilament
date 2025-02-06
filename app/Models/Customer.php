@@ -17,4 +17,9 @@ class Customer extends Model
     {
         return $this->hasMany(Quotation::class);
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

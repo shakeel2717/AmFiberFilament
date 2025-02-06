@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-    protected $fillable = ['invoice_id', 'quotation_id', 'type', 'amount', 'transaction_date'];
+    protected $fillable = ['invoice_id', 'customer_id', 'quotation_id', 'type', 'amount', 'transaction_date'];
 
     public function invoice()
     {
@@ -16,5 +16,10 @@ class Transaction extends Model
     public function quotation()
     {
         return $this->belongsTo(Quotation::class);
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
     }
 }

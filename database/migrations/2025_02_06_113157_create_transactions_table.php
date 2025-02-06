@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('customer_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('invoice_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('quotation_id')->nullable()->constrained()->onDelete('cascade');
-            $table->enum('type', ['income', 'expense', 'invoice']);
+            $table->enum('type', ['payment', 'refund', 'adjustment']);
             $table->decimal('amount', 10, 2);
             $table->date('transaction_date');
             $table->timestamps();
