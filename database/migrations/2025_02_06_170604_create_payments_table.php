@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('party_id')->constrained();
+            $table->double('amount');
+            $table->string('payment_method')->default('cash');
+            $table->text('reference')->nullable();
             $table->timestamps();
         });
     }
