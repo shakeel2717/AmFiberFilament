@@ -16,5 +16,10 @@ class Quotation extends Model
     {
         return $this->belongsTo(Customer::class, 'customer_id');
     }
-    
+    public function quotation_items()
+{
+    return $this->hasMany(QuotationItem::class, 'quotation_id');
+}
+
+
 }
