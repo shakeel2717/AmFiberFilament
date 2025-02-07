@@ -75,6 +75,7 @@ class QuotationResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
                 LinkAction::make('print')
                 ->label('Print')
                 ->icon('heroicon-o-printer')

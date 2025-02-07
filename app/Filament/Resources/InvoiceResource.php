@@ -118,6 +118,7 @@ class InvoiceResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
                 LinkAction::make('printInvoice')
                 ->label('Print')
                 ->icon('heroicon-o-printer')

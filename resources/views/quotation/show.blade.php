@@ -36,7 +36,8 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($quotation->quotation_items as $item)
+            @foreach ($quotation->quotation_items ?? [] as $item)
+
                     <tr>
                         <th>Size</th>
                         <td style="text-align: right; font-weight: bold">{{ $item->width }}x{{ $item->height }}
