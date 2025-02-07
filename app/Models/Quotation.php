@@ -12,4 +12,8 @@ class Quotation extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+    public function party() // Ye customer ka relation return karega
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
 }

@@ -17,4 +17,5 @@ class Product extends Model
     {
         return $this->hasOne(Plai::class);
     }
+    
 }

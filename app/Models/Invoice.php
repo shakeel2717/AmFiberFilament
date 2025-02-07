@@ -2,58 +2,44 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
-    protected $fillable = ['customer_id', 'invoice_number', 'invoice_date', 'total', 'status'];
+    use HasFactory;
 
-    protected static function boot()
+    protected $fillable = ['customer_id', 'total_amount', 'discount', 'advance', 'status', 'type'];
+
+
+    public function party()
     {
-        parent::boot();
-
-        // Automatically generate an invoice number before saving
-        static::creating(function ($invoice) {
-            if (empty($invoice->invoice_number)) {
-                $invoice->invoice_number = 'INV-' . now()->format('YmdHis');
-            }
-        });
-
-        // After an invoice is created, update the total
-        static::created(function ($invoice) {
-            $invoice->updateTotal();
-        });
-
-        // Automatically update the invoice total when items are changed
-        static::updated(function ($invoice) {
-            $invoice->updateTotal();
-        });
-
-        static::deleting(function ($invoice) {
-            $invoice->items()->delete(); // Delete related items when invoice is deleted
-        });
+        return $this->belongsTo(Party::class, 'customer_id');
     }
 
-    public function updateTotal()
+    public function invoice_products()
     {
-        if ($this->exists) { // Ensure the invoice exists before updating
-            $this->total = $this->items()->sum('total');
-            $this->saveQuietly(); // Prevent infinite loop of saving
+        return $this->hasMany(InvoiceProduct::class);
+    }
+
+    public function calculateSubtotal()
+    {
+
+        $total = 0;
+        foreach ($this->invoice_products as $item) {
+            $totalSize = $item->totalSquareFeet();
+            $total += $totalSize * $item->price * $item->qty;
         }
+        return $total;
     }
 
-    public function customer()
+    public function calculateDiscount()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->discount;
     }
 
-    public function transactions()
+    public function calculateGrandTotal()
     {
-        return $this->hasMany(Transaction::class);
-    }
-
-    public function items()
-    {
-        return $this->hasMany(InvoiceItem::class);
+        return $this->calculateSubtotal() - $this->calculateDiscount() - $this->advance;
     }
 }

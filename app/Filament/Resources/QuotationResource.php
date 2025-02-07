@@ -10,6 +10,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\LinkAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -74,6 +75,11 @@ class QuotationResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                LinkAction::make('print')
+                ->label('Print')
+                ->icon('heroicon-o-printer')
+                ->url(fn (Quotation $record) => route('quotation.show', $record->id))
+                ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

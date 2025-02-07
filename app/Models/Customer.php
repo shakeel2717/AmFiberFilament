@@ -22,4 +22,8 @@ class Customer extends Model
     {
         return $this->hasMany(Transaction::class);
     }
+    public function balance()
+    {
+        return $this->total_due - $this->advance;
+    }
 }
