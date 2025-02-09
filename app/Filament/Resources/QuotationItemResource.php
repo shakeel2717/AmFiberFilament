@@ -24,11 +24,11 @@ class QuotationItemResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('quotation_id')
-                ->label('Quotation')
-                ->required()
-                ->options(\App\Models\Quotation::pluck('quotation_number', 'id'))
-                ->searchable()
-                ->placeholder('Select a quotation'),
+                    ->label('Quotation')
+                    ->required()
+                    ->options(\App\Models\Quotation::pluck('quotation_number', 'id'))
+                    ->searchable()
+                    ->placeholder('Select a quotation'),
                 Forms\Components\TextInput::make('width')
                     ->required()
                     ->maxLength(255),

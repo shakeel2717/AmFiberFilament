@@ -37,36 +37,40 @@
         </thead>
         <tbody>
             @if ($quotation && $quotation->quotation_items->count())
-                @foreach ($quotation->quotation_items as $item)
+                @foreach ($quotation->quotation_items as $index => $item)
                     <tr>
                         <th>Size</th>
                         <td style="text-align: right; font-weight: bold">
                             {{ $item->width }} x {{ $item->height }}
                         </td>
-                        <td rowspan="6" class="align-middle">Rs: {{ number_format($item->price, 2) }}</td>
-                        <td rowspan="6" class="align-middle">Rs: {{ number_format($quotation->total_amount, 2) }}</td>
+                        <td>Rs: {{ number_format($item->price, 2) }}</td>
+                        <td>Rs: {{ number_format($item->price, 2) }}</td>
                     </tr>
                     <tr>
                         <th>Specification</th>
-                        <td>{{ $item->specification }}</td>
+                        <td colspan="3">{{ $item->specification }}</td>
                     </tr>
                     <tr>
                         <th>Piller Pipe</th>
-                        <td>{{ $item->piller }}</td>
+                        <td colspan="3">{{ $item->piller }}</td>
                     </tr>
                     <tr>
                         <th>Shed Pipe</th>
-                        <td>{{ $item->shed }}</td>
+                        <td colspan="3">{{ $item->shed }}</td>
                     </tr>
                     <tr>
                         <th>Truss Pipe</th>
-                        <td>{{ $item->truss }}</td>
+                        <td colspan="3">{{ $item->truss }}</td>
                     </tr>
                     <tr>
                         <th>Thickness in mm</th>
-                        <td>{{ $item->thickness }}</td>
+                        <td colspan="3">{{ $item->thickness }}</td>
                     </tr>
                 @endforeach
+                <tr>
+                    <td colspan="3" style="text-align: right; font-weight: bold;">Total Amount:</td>
+                    <td style="font-weight: bold;">Rs: {{ number_format($quotation->total_amount, 2) }}</td>
+                </tr>
             @else
                 <tr>
                     <td colspan="4" style="text-align: center; font-weight: bold;">
@@ -74,8 +78,8 @@
                     </td>
                 </tr>
             @endif
-
         </tbody>
+
     </table>
 
 

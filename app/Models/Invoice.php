@@ -11,7 +11,11 @@ class Invoice extends Model
 
     protected $fillable = ['customer_id', 'total_amount', 'discount', 'advance', 'status', 'type'];
 
-
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
+    
     public function party()
     {
         return $this->belongsTo(Party::class, 'customer_id');
@@ -21,7 +25,10 @@ class Invoice extends Model
     {
         return $this->hasMany(InvoiceProduct::class);
     }
-
+    public function items()
+    {
+        return $this->hasMany(InvoiceItem::class, 'invoice_id');
+    }
     public function calculateSubtotal()
     {
 

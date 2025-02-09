@@ -99,10 +99,11 @@ class InvoiceResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('customer.name')
-                    ->label('Customer')
-                    ->sortable()
-                    ->searchable(),
-
+                ->label('Customer')
+                ->sortable()
+                ->searchable(),
+            
+            
                 Tables\Columns\TextColumn::make('invoice_number')
                     ->searchable(),
 
